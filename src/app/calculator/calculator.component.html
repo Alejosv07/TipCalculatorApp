@@ -1,0 +1,48 @@
+<section class="d-flex flex-wrap bg-white rounded justify-content-center gap-6 p-6">
+  <div class="d-flex flex-column justify-content-around gap-4">
+    <div class="form-group">
+      <label for="bill">Bill</label>
+      <div class="dollar-group d-flex align-items-center">
+        <span class="dollar-symbol">$</span>
+        <input type="text" class="form-control input" (keyup)="calculate(bill.value, billCostum.value, billPerson.value)" #bill id="bill">
+      </div>
+    </div>
+    <div class="form-group">
+      <p>Select Tip %</p>
+      <div class="d-flex flex-wrap gap-2 btn-box">
+        <button (click)="setPorcentage('0.05')" class="btn-main-color rounded">5%</button>
+        <button (click)="setPorcentage('0.10')" class="btn-main-color rounded">10%</button>
+        <button (click)="setPorcentage('0.15')" class="btn-main-color rounded">15%</button>
+        <button (click)="setPorcentage('0.25')" class="btn-main-color rounded">25%</button>
+        <button (click)="setPorcentage('0.50')" class="btn-main-color rounded">50%</button>
+        <input type="text" #billCostum class="btn-main-color input-costum rounded" (keyup)="calculate(bill.value, billCostum.value, billPerson.value)" placeholder="Costum" id="bill">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="people">Number of People</label>
+      <div class="person-group d-flex align-items-center">
+        <figure class="m-0 person-symbol">
+          <img class="d-block" src="../../assets/images/icon-person.svg" alt="">
+        </figure>
+        <input type="text" #billPerson (keyup)="calculate(bill.value, billCostum.value, billPerson.value)" class="form-control input" id="people">
+      </div>
+    </div>
+  </div>
+  <aside class="main-color rounded p-6">
+    <div class="d-flex justify-content-between align-items-center gap-6">
+      <div>
+        <p class="text-white">Tip Amount</p>
+        <small class="text-muted">/ person</small>
+      </div>
+      <p class="quantity">$<span>{{TipPerson}}</span></p>
+    </div>
+    <div class="d-flex justify-content-between align-items-center gap-6">
+      <div>
+        <p class="text-white">Total</p>
+        <small class="text-muted">/ person</small>
+      </div>
+      <p class="quantity">$<span>{{totalPerson}}</span></p>
+    </div>
+    <button class="btn-reset" (click)="reset()">Reset</button>
+  </aside>
+</section>
