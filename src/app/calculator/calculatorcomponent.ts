@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'calculator-main',
@@ -7,23 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Calculatorcomponent implements OnInit {
   
-  bill : any = 0.0;
-  tipPorcentage : any = 0;
-  numberPerson : any = 0;
-  TipPerson : any = 0.00;
-  totalPerson : any = 0.00;
+  
+  bill: FormControl = new FormControl("", [Validators.required, Validators.minLength(1)]);
+  tipPorcentage: FormControl = new FormControl("", [Validators.required, Validators.minLength(1)]);
+  numberPerson: FormControl = new FormControl("", [Validators.required, Validators.minLength(1)]);
+  TipPerson : number = 0.0;
+  totalPerson : number = 0.00;
 
-  public calculate(bill : string, billCostum : string, billPerson : string) {
+  public calculate() {
     try{
-      this.bill = parseFloat(bill);
-      this.tipPorcentage = parseFloat(billCostum);
-      this.numberPerson = parseFloat(billPerson);
-      this.TipPerson = Number((this.bill*this.tipPorcentage)/this.numberPerson).toFixed(2);
-      this.totalPerson = Number((this.bill/this.numberPerson)).toFixed(2);
-      if(Number.isNaN(this.TipPerson)){
+      this.TipPerson = parseFloat(Number((this.bill.value *this.tipPorcentage.value)/this.numberPerson.value).toFixed(2));//Mostrar error con rojo/numero de personas requerido y procentaje
+      this.totalPerson = parseFloat(Number((this.bill.value/this.numberPerson.value)).toFixed(2));//Validate number of person
+
+      if(!Number.isFinite(this.TipPerson)){
         this.TipPerson = 0;
       }
-      if(Number.isNaN(this.totalPerson)){
+      if(!Number.isFinite(this.totalPerson)){
         this.totalPerson = 0;
       }
     }catch(error){
@@ -31,34 +31,19 @@ export class Calculatorcomponent implements OnInit {
     }
   }
   
-  public calculate2() {
-    try{
-      this.TipPerson = Number((this.bill*this.tipPorcentage)/this.numberPerson).toFixed(2);
-      this.totalPerson = Number((this.bill/this.numberPerson)).toFixed(2);
-      if(Number.isNaN(this.TipPerson)){
-        this.TipPerson = 0;
-      }
-      if(Number.isNaN(this.totalPerson)){
-        this.totalPerson = 0;
-      }
-    }catch(error){
-      console.log(error);
-    }
-  }
-
   public setPorcentage (value : string){
     try {
-      this.tipPorcentage = parseFloat(value);
-      this.calculate2();
+      this.tipPorcentage.setValue(parseFloat(value));
+      this.calculate();
     } catch (error) {
       console.log(error);      
     }
   }
 
   public reset(){
-    this.bill = 0.0;
-    this.tipPorcentage = 0;
-    this.numberPerson = 0;
+    this.bill.reset();
+    this.tipPorcentage.reset();
+    this.numberPerson.reset();
     this.TipPerson = 0.00;
     this.totalPerson = 0.00;
   }

@@ -1,10 +1,10 @@
-<section class="d-flex flex-wrap bg-white rounded justify-content-center gap-6 p-6">
+<section class="d-flex flex-wrap bg-white rounded justify-content-center gap-6 p-6 main_container">
   <div class="d-flex flex-column justify-content-around gap-4">
     <div class="form-group">
       <label for="bill">Bill</label>
       <div class="dollar-group d-flex align-items-center">
         <span class="dollar-symbol">$</span>
-        <input type="text" class="form-control input" (keyup)="calculate(bill.value, billCostum.value, billPerson.value)" #bill id="bill">
+        <input type="text" class="form-control input" (keyup)="calculate()" [formControl]="bill" placeholder="0">
       </div>
     </div>
     <div class="form-group">
@@ -15,7 +15,7 @@
         <button (click)="setPorcentage('0.15')" class="btn-main-color rounded">15%</button>
         <button (click)="setPorcentage('0.25')" class="btn-main-color rounded">25%</button>
         <button (click)="setPorcentage('0.50')" class="btn-main-color rounded">50%</button>
-        <input type="text" #billCostum class="btn-main-color input-costum rounded" (keyup)="calculate(bill.value, billCostum.value, billPerson.value)" placeholder="Costum" id="bill">
+        <input type="text" class="btn-main-color input-costum rounded" [formControl]="tipPorcentage" [value]="tipPorcentage.value != 0 ? tipPorcentage.value : 0" (keyup)="calculate()" placeholder="Custom">
       </div>
     </div>
     <div class="form-group">
@@ -24,25 +24,25 @@
         <figure class="m-0 person-symbol">
           <img class="d-block" src="../../assets/images/icon-person.svg" alt="">
         </figure>
-        <input type="text" #billPerson (keyup)="calculate(bill.value, billCostum.value, billPerson.value)" class="form-control input" id="people">
+        <input type="text" [formControl]="numberPerson" (keyup)="calculate()" class="form-control input" placeholder="0">
       </div>
     </div>
   </div>
-  <aside class="main-color rounded p-6">
-    <div class="d-flex justify-content-between align-items-center gap-6">
+  <aside class="main-color d-flex flex-wrap rounded p-4 containerData">
+    <div class="d-flex justify-content-between align-items-center flex-fill gap-6">
       <div>
         <p class="text-white">Tip Amount</p>
         <small class="text-muted">/ person</small>
       </div>
       <p class="quantity">$<span>{{TipPerson}}</span></p>
     </div>
-    <div class="d-flex justify-content-between align-items-center gap-6">
+    <div class="d-flex justify-content-between align-items-center flex-fill gap-6">
       <div>
         <p class="text-white">Total</p>
         <small class="text-muted">/ person</small>
       </div>
       <p class="quantity">$<span>{{totalPerson}}</span></p>
     </div>
-    <button class="btn-reset" (click)="reset()">Reset</button>
+    <button class="btn-reset align-self-end" (click)="reset()">Reset</button>
   </aside>
 </section>
